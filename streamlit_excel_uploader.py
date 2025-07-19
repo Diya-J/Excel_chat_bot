@@ -29,13 +29,15 @@ from datetime import datetime
 import io
 import base64
 import os
+import streamlit as st
 from dotenv import load_dotenv
 
 # Load environment variables
 load_dotenv()
 
 # Get API key from environment variable
-OPENAI_API_KEY = os.getenv("OPENAI_API_KEY")
+#OPENAI_API_KEY = os.getenv("OPENAI_API_KEY")
+OPENAI_API_KEY = st.secrets.get("OPENAI_API_KEY")
 
 # Page configuration
 st.set_page_config(
