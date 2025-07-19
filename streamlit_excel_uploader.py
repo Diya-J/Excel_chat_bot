@@ -35,6 +35,7 @@ from dotenv import load_dotenv
 # Load environment variables
 load_dotenv()
 
+
 # Get API key from environment variable
 
 OPENAI_API_KEY = os.getenv("OPENAI_API_KEY") or st.secrets.get("OPENAI_API_KEY")
@@ -438,6 +439,10 @@ def generate_chart(df, chart_type, user_query):
             if cat_cols and num_cols:
                 # Group by categorical column and aggregate numeric column
                 grouped_data = df.groupby(cat_cols[0])[num_cols[0]].mean().reset_index()
+                # Debug: Show grouped data in Streamlit (optional, comment out if not needed)
+                # st.write("Grouped Data for Bar Chart:", grouped_data)
+                if grouped_data.empty or grouped_data[num_cols[0]].isnull().all():
+                    return False, "No data available for bar chart."
                 sns.barplot(data=grouped_data, x=cat_cols[0], y=num_cols[0], ax=ax, color='#1f77b4')
                 ax.set_xlabel(cat_cols[0].replace('_', ' ').title())
                 ax.set_ylabel(f"Average {num_cols[0].replace('_', ' ').title()}")
